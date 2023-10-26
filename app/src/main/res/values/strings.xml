@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PE_PRM_TEAM2</string>
+    <string-array name="page">
+        <item>Page 1</item>
+        <item>Page 2</item>
+        <item>Page 3</item>
+    </string-array>
+</resources>
