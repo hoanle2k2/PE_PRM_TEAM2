@@ -46,7 +46,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         if (user==null)
             return;
         Picasso.get().load(user.getAvatar()).into(holder.imageView);
-        holder.textView.setText(user.getFirst_name()+" " +user.getLast_name());
+        holder.tv_user.setText(user.getFirst_name()+" " +user.getLast_name());
+        holder.tv_email.setText(user.getEmail());
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,12 +70,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     public class UserViewHolder extends RecyclerView.ViewHolder{
         private ImageView imageView;
-        private TextView textView;
+        private TextView tv_user, tv_email;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView=itemView.findViewById(R.id.img_avatar);
-            textView=itemView.findViewById(R.id.tv_name);
+            tv_user=itemView.findViewById(R.id.tv_name);
+            tv_email = itemView.findViewById(R.id.tv_email);
         }
     }
 }
