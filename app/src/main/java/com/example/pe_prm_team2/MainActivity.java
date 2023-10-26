@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void searchUser(String textsearh) {
         List<User> searchResult = new ArrayList<>();
-        List<User> emtpy = new ArrayList<>();
         for (User user: list) {
             String username = (user.getFirst_name()+" "+user.getLast_name()).toLowerCase().trim();
             if(username.contains(textsearh.toLowerCase().trim())||
@@ -106,12 +105,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if (searchResult.isEmpty()){
-            rcvUser.setAdapter(new UserAdapter(emtpy));
             Toast.makeText(MainActivity.this,"Không tìm thấy user!",Toast.LENGTH_SHORT).show();
         }
-        else{
             rcvUser.setAdapter(new UserAdapter(searchResult));
-        }
     }
 
     public void callUserApi(int page){
