@@ -1,6 +1,8 @@
 package com.example.pe_prm_team2.adapter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,21 +14,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pe_prm_team2.R;
 import com.example.pe_prm_team2.UserDetailActivity;
+import com.example.pe_prm_team2.api.ApiService;
 import com.example.pe_prm_team2.model.User;
+import com.example.pe_prm_team2.model.UserDetail;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     private List<User> listUsers;
-
+    private User user = new User();
+    private Context context;
     public UserAdapter() {
     }
 
-    public UserAdapter(List<User> listUsers) {
-
+    public UserAdapter(List<User> listUsers, Context context) {
+        this.context = context;
         this.listUsers = listUsers;
     }
+
     public  void setUserSearchResult(List<User> searchResult) {
         this.listUsers = searchResult;
         notifyDataSetChanged();
@@ -42,6 +52,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+
         User user = listUsers.get(position);
         if (user==null)
             return;
@@ -51,14 +62,31 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), UserDetailActivity.class);
-                intent.putExtra("avatar",user.getAvatar());
-                intent.putExtra("id",user.getId()+"");
-                intent.putExtra("fullname",user.getFirst_name()+" "+user.getLast_name());
-                intent.putExtra("email",user.getEmail());
-                view.getContext().startActivity(intent);
+
+                getUserApiDetail(user.getId());
+
             }
         });
+    }
+
+    public void getUserApiDetail(int id){
+        ApiService.apiservice.getUserApiDetail(id).enqueue(new Callback<UserDetail>() {
+            @Override
+            public void onResponse(Call<UserDetail> call, Response<UserDetail> response) {
+                UserDetail userDetail= response.body();
+
+                user= userDetail.getData();
+                Intent intent = new Intent(context, UserDetailActivity.class);
+                intent.putExtra("user", user);
+                System.out.println(userDetail);
+            }
+
+            @Override
+            public void onFailure(Call<UserDetail> call, Throwable t) {
+                System.out.println("");
+            }
+        });
+
     }
 
     @Override

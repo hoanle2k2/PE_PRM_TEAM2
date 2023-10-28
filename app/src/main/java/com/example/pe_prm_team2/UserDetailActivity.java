@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.pe_prm_team2.model.User;
 import com.squareup.picasso.Picasso;
 
 public class UserDetailActivity extends AppCompatActivity {
@@ -32,7 +33,7 @@ public class UserDetailActivity extends AppCompatActivity {
         tvemail=findViewById(R.id.tv_detailemail);
         btnback=findViewById(R.id.btn_backhome);
 
-
+        User user = ((User)myIntent.getSerializableExtra("user"));
         String avatar=myIntent.getStringExtra("avatar");
         String id=myIntent.getStringExtra("id");
         String fullname=myIntent.getStringExtra("fullname");

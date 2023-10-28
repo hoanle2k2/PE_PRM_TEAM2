@@ -17,6 +17,7 @@ import com.example.pe_prm_team2.adapter.UserAdapter;
 import com.example.pe_prm_team2.api.ApiService;
 import com.example.pe_prm_team2.model.Dataresponse;
 import com.example.pe_prm_team2.model.User;
+import com.example.pe_prm_team2.model.UserDetail;
 
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private List<User> list;
     private RecyclerView rcvUser;
-
+    private User user;
     private SearchView searchView;
     private Spinner spinner;
     private String[] listSpin={"Page 1","Page 2"};
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         if (searchResult.isEmpty()){
             Toast.makeText(MainActivity.this,"Không tìm thấy user!",Toast.LENGTH_SHORT).show();
         }
-            rcvUser.setAdapter(new UserAdapter(searchResult));
+            rcvUser.setAdapter(new UserAdapter(searchResult, this));
     }
 
     public void callUserApi(int page){
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
               public void onResponse(Call<Dataresponse> call, Response<Dataresponse> response) {
                   Dataresponse dataresponse=response.body();
                   list=dataresponse.getData();
-                  rcvUser.setAdapter(new UserAdapter(list));
+                  rcvUser.setAdapter(new UserAdapter(list, MainActivity.this));
               }
 
               @Override
@@ -126,4 +127,6 @@ public class MainActivity extends AppCompatActivity {
           });
 
     }
+
+
 }

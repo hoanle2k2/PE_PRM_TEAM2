@@ -41,7 +41,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Email"
                 android:textColor="#2196F3"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
